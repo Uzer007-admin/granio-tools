@@ -5,7 +5,7 @@ ENV GO_AMD64_CHECKSUM="42d158b4d8f7b61ac0a830567c940a86098fb7aac52e467a5ebec03ef
 ENV GO_ARM64_CHECKSUM="4a97373d49fcacdcf3694fea368a500b00ee3e963974f3e7514132717632f052"
 ENV ZIG_VERSION=0.16.0
 ENV ZIG_MINISIGN_PUBKEY="RWSGOq2NVecA2UPNdBUZykf1CCb147pkmdtYxgb3Ti+JO/wCYvhbAb/U"
-ENV FYNE_CLI_VERSION=v1.7.4-0.20261018001739-ff21b8cfdc07
+ENV FYNE_CLI_VERSION=9286299481eeb6500361436638266dc5a612258b
 ENV FIXUID_VERSION=0.6.0
 ENV MINISIGN_VERSION=0.12
 
@@ -104,7 +104,7 @@ RUN set -eux; \
 
 # Install the fyne-cross-s3 download and upload tool
 RUN set -eux; \
-    go install -ldflags="-w -s" -v "github.com/Uzer007-admin/granio-tools/cross/internal/cmd/fyne-cross-s3@v1.6.4-0.20261018001919-678e6b740c1b"; \
+    go install -ldflags="-w -s" -v "github.com/Uzer007-admin/granio-tools/cross/internal/cmd/fyne-cross-s3@9286299481eeb6500361436638266dc5a612258b"; \
     mv /go/bin/fyne-cross-s3 /usr/local/bin/fyne-cross-s3;
 
 # Install the fyne CLI tool

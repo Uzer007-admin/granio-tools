@@ -20,10 +20,10 @@ Go 1.27.1+. Кросс-сборка и мобильный мост сохран�
 зависимости Kubernetes и AWS не включаются в модуль обычного упаковщика.
 
 ```sh
-go install github.com/Uzer007-admin/granio-tools/cmd/granio@{{TOOLS_VERSION}}
-go install github.com/Uzer007-admin/granio-tools/cmd/granio_setup@{{TOOLS_VERSION}}
-go install github.com/Uzer007-admin/granio-tools/cross/cmd/granio_cross@{{CROSS_VERSION}}
-go install github.com/Uzer007-admin/granio-tools/studio@{{TOOLS_VERSION}}
+go install github.com/Uzer007-admin/granio-tools/cmd/granio@9286299481eeb6500361436638266dc5a612258b
+go install github.com/Uzer007-admin/granio-tools/cmd/granio_setup@9286299481eeb6500361436638266dc5a612258b
+go install github.com/Uzer007-admin/granio-tools/cross/cmd/granio_cross@9286299481eeb6500361436638266dc5a612258b
+go install github.com/Uzer007-admin/granio-tools/studio@9286299481eeb6500361436638266dc5a612258b
 ```
 
 Для локальной проверки каждого модуля задайте `GOWORK=off` и выполните
