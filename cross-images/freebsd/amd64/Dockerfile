@@ -1,0 +1,30 @@
+ARG FYNE_CROSS_IMAGES_VERSION=dev
+ARG FYNE_CROSS_REPOSITORY=docker.io/fyneio/fyne-cross-images
+
+# fyne-cross image for linux
+FROM ${FYNE_CROSS_REPOSITORY}:${FYNE_CROSS_IMAGES_VERSION}-freebsd-base AS pkg
+
+# Download FreeBSD base, extract libs/includes, pkg keys and configs
+# and install fyne dependencies
+# Based on: https://github.com/myfreeweb/docker-freebsd-cross/tree/fc70196f62c00a10eb61a45a4798e09214e0cdfd
+ENV ABI="FreeBSD:14:amd64"
+RUN mkdir /freebsd \
+    && mkdir /etc/pkg/ \
+	&& curl https://download.freebsd.org/ftp/releases/amd64/14.4-RELEASE/base.txz | \
+		bsdtar -xf - -C /freebsd ./lib ./usr/lib ./usr/libdata ./usr/include ./usr/share/keys ./etc \
+    && cp /freebsd/etc/pkg/FreeBSD.conf /etc/pkg/ \
+    && ln -s /freebsd/usr/share/keys /usr/share/keys 
+
+# Set pkg variables required to compile
+ENV PKG_CONFIG_SYSROOT_DIR=/freebsd
+ENV PKG_CONFIG_LIBDIR=/freebsd/usr/libdata/pkgconfig:/freebsd/usr/local/libdata/pkgconfig:/freebsd/usr/local/share/pkgconfig
+
+RUN set -eux; \
+    pkg -o OSVERSION=1404000 fetch -o /tmp/download --yes -d xorg-minimal xorgproto glfw; \
+    rm -rf /tmp/download/All/Hashed/*llvm*; \
+    rm -rf /tmp/download/All/Hashed/*perl*; \
+    rm -rf /tmp/download/All/Hashed/*python*; \
+    for f in  /tmp/download/All/Hashed/*.pkg; \
+        do bsdtar -xvf "$f" -C /freebsd;\
+    done; \
+    rm -rf  /tmp/download
