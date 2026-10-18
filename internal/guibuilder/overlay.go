@@ -3,14 +3,14 @@ package guibuilder
 import (
 	"image/color"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/layout"
-	"fyne.io/fyne/v2/theme"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/canvas"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/layout"
+	"github.com/Uzer007-admin/granio/v2/theme"
+	"github.com/Uzer007-admin/granio/v2/widget"
 
-	"github.com/fyne-io/refyne"
+	"github.com/Uzer007-admin/granio-ui"
 )
 
 type overlay struct {
@@ -26,26 +26,26 @@ func newOverlay(b *Builder) *overlay {
 	return o
 }
 
-func (o *overlay) CreateRenderer() fyne.WidgetRenderer {
+func (o *overlay) CreateRenderer() granio.WidgetRenderer {
 	r := canvas.NewRectangle(color.Transparent)
 	r.StrokeColor = color.Transparent
 	r.StrokeWidth = 4
-	r.Resize(fyne.NewSize(20, 10))
-	r.Move(fyne.NewPos(10, 10))
+	r.Resize(granio.NewSize(20, 10))
+	r.Move(granio.NewPos(10, 10))
 
 	o.indicator = r
 
 	return widget.NewSimpleRenderer(container.NewWithoutLayout(r))
 }
 
-func (o *overlay) Tapped(pe *fyne.PointEvent) {
-	rootPos := fyne.CurrentApp().Driver().AbsolutePositionForObject(o.b.root)
+func (o *overlay) Tapped(pe *granio.PointEvent) {
+	rootPos := granio.CurrentApp().Driver().AbsolutePositionForObject(o.b.root)
 	pos := pe.AbsolutePosition.Subtract(rootPos)
 	obj := findObject(o.b.root, pos)
 
 	// TODO update when an item is removed, inserted, or if the UI resizes
 	o.indicator.StrokeColor = theme.Color(theme.ColorNamePrimary)
-	objAbsPos := fyne.CurrentApp().Driver().AbsolutePositionForObject(obj)
+	objAbsPos := granio.CurrentApp().Driver().AbsolutePositionForObject(obj)
 	objPos := objAbsPos.Subtract(rootPos)
 	o.indicator.Move(objPos)
 	o.indicator.Resize(obj.Size())
@@ -53,9 +53,9 @@ func (o *overlay) Tapped(pe *fyne.PointEvent) {
 	o.b.choose(obj)
 }
 
-func findObject(o fyne.CanvasObject, p fyne.Position) fyne.CanvasObject {
+func findObject(o granio.CanvasObject, p granio.Position) granio.CanvasObject {
 	switch w := o.(type) {
-	case *fyne.Container:
+	case *granio.Container:
 		for _, child := range w.Objects {
 			if !child.Visible() || !insideObject(child, p) {
 				continue
@@ -80,7 +80,7 @@ func findObject(o fyne.CanvasObject, p fyne.Position) fyne.CanvasObject {
 		}
 
 		return w
-	case fyne.Widget:
+	case granio.Widget:
 		for _, child := range refyne.DropZonesForObject(o) {
 			if !child.Visible() || !insideObject(child, p) {
 				continue
@@ -99,7 +99,7 @@ func findObject(o fyne.CanvasObject, p fyne.Position) fyne.CanvasObject {
 	return nil
 }
 
-func insideObject(o fyne.CanvasObject, p fyne.Position) bool {
+func insideObject(o granio.CanvasObject, p granio.Position) bool {
 	pos := o.Position()
 	if p.X < pos.X || p.Y < pos.Y {
 		return false
@@ -109,9 +109,9 @@ func insideObject(o fyne.CanvasObject, p fyne.Position) bool {
 	return p.X < pos.X+size.Width && p.Y < pos.Y+size.Height
 }
 
-func isContainerOrWidget(o fyne.CanvasObject) bool {
+func isContainerOrWidget(o granio.CanvasObject) bool {
 	switch o.(type) {
-	case fyne.Widget, *fyne.Container, *layout.Spacer:
+	case granio.Widget, *granio.Container, *layout.Spacer:
 		return true
 	default:
 		return false

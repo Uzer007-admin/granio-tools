@@ -3,14 +3,14 @@ package main
 import (
 	"strings"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/storage"
+	"github.com/Uzer007-admin/granio/v2/widget"
 )
 
 const preferenceKeyRecent = "recentlist"
 
-func addRecent(u fyne.URI, p fyne.Preferences) {
+func addRecent(u granio.URI, p granio.Preferences) {
 	old := loadRecents(p)
 	if len(old) > 0 {
 		if old[0].String() == u.String() {
@@ -28,7 +28,7 @@ func addRecent(u fyne.URI, p fyne.Preferences) {
 		}
 	}
 
-	all := append([]fyne.URI{u}, old...)
+	all := append([]granio.URI{u}, old...)
 	str := ""
 	for _, u := range all {
 		str += "|" + u.String()
@@ -36,8 +36,8 @@ func addRecent(u fyne.URI, p fyne.Preferences) {
 	p.SetString(preferenceKeyRecent, str[1:])
 }
 
-func loadRecents(p fyne.Preferences) []fyne.URI {
-	var ret []fyne.URI
+func loadRecents(p granio.Preferences) []granio.URI {
+	var ret []granio.URI
 	val := p.String(preferenceKeyRecent)
 	for _, s := range strings.Split(val, "|") {
 		u, err := storage.ParseURI(s)
@@ -48,16 +48,16 @@ func loadRecents(p fyne.Preferences) []fyne.URI {
 	return ret
 }
 
-func makeRecentList(p fyne.Preferences, f func(fyne.URI)) *widget.List {
+func makeRecentList(p granio.Preferences, f func(granio.URI)) *widget.List {
 	recents := loadRecents(p)
 	r := widget.NewList(
 		func() int {
 			return len(recents)
 		},
-		func() fyne.CanvasObject {
+		func() granio.CanvasObject {
 			return widget.NewLabel("")
 		},
-		func(id widget.ListItemID, o fyne.CanvasObject) {
+		func(id widget.ListItemID, o granio.CanvasObject) {
 			name := recents[id].Name()
 			o.(*widget.Label).SetText(name)
 		})

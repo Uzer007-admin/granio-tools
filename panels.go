@@ -3,19 +3,19 @@ package main
 import (
 	"strings"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/dialog"
-	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/theme"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/dialog"
+	"github.com/Uzer007-admin/granio/v2/storage"
+	"github.com/Uzer007-admin/granio/v2/theme"
+	"github.com/Uzer007-admin/granio/v2/widget"
 
-	xWidget "fyne.io/x/fyne/widget"
+	xWidget "github.com/Uzer007-admin/granio-x/widget"
 
-	"github.com/fyne-io/terminal"
+	"github.com/Uzer007-admin/granio-terminal"
 )
 
-func (d *defyne) makeEditorPanel() fyne.CanvasObject {
+func (d *defyne) makeEditorPanel() granio.CanvasObject {
 	welcome := widget.NewLabel("Welcome to Defyne, the Fyne IDE.\n\nChoose a project file from the list.")
 	d.fileTabs = container.NewDocTabs(
 		container.NewTabItemWithIcon("Welcome", theme.HomeIcon(),
@@ -52,7 +52,7 @@ func (d *defyne) makeFilesPanel() *xWidget.FileTree {
 
 	files := xWidget.NewFileTree(d.projectRoot)
 	files.Filter = filterHidden()
-	files.Sorter = func(u1, u2 fyne.URI) bool {
+	files.Sorter = func(u1, u2 granio.URI) bool {
 		return u1.String() < u2.String() // Sort alphabetically
 	}
 
@@ -72,7 +72,7 @@ func (d *defyne) makeFilesPanel() *xWidget.FileTree {
 	return files
 }
 
-func (d *defyne) makeTerminalPanel() fyne.CanvasObject {
+func (d *defyne) makeTerminalPanel() granio.CanvasObject {
 	term := terminal.New()
 	term.SetStartDir(d.projectRoot.Path())
 	go term.RunLocalShell()
@@ -82,7 +82,7 @@ func (d *defyne) makeTerminalPanel() fyne.CanvasObject {
 
 type filter struct{}
 
-func (f *filter) Matches(u fyne.URI) bool {
+func (f *filter) Matches(u granio.URI) bool {
 	name := u.Name()
 	if name[0] == '.' {
 		return false

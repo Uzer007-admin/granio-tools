@@ -7,13 +7,13 @@ import (
 	"runtime"
 	"strings"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/dialog"
-	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/theme"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/dialog"
+	"github.com/Uzer007-admin/granio/v2/storage"
+	"github.com/Uzer007-admin/granio/v2/theme"
+	"github.com/Uzer007-admin/granio/v2/widget"
 
-	setup "fyne.io/setup/pkg"
+	setup "github.com/Uzer007-admin/granio-setup/pkg"
 )
 
 func (d *defyne) menuActionNew() {
@@ -95,48 +95,48 @@ func (d *defyne) menuActionFullScreenToggle() {
 	d.win.SetFullScreen(!d.win.FullScreen())
 }
 
-func (d *defyne) makeHelpMenu(w fyne.Window) *fyne.Menu {
-	return fyne.NewMenu("Help",
-		fyne.NewMenuItem("Documentation", func() {
+func (d *defyne) makeHelpMenu(w granio.Window) *granio.Menu {
+	return granio.NewMenu("Help",
+		granio.NewMenuItem("Documentation", func() {
 			u, _ := url.Parse("https://fyne.io/defyne")
-			_ = fyne.CurrentApp().OpenURL(u)
+			_ = granio.CurrentApp().OpenURL(u)
 		}),
-		fyne.NewMenuItem("Support", func() {
+		granio.NewMenuItem("Support", func() {
 			u, _ := url.Parse("https://fyne.io/support")
-			_ = fyne.CurrentApp().OpenURL(u)
+			_ = granio.CurrentApp().OpenURL(u)
 		}),
-		fyne.NewMenuItemSeparator(),
-		fyne.NewMenuItem("Check Environment...", func() {
+		granio.NewMenuItemSeparator(),
+		granio.NewMenuItem("Check Environment...", func() {
 			if w != nil {
 				setup.ShowSummaryDialog(w)
 			} else {
-				setup.ShowSummaryWindow(fyne.CurrentApp())
+				setup.ShowSummaryWindow(granio.CurrentApp())
 			}
 		}),
-		fyne.NewMenuItemSeparator(),
-		fyne.NewMenuItem("Sponsor", func() {
+		granio.NewMenuItemSeparator(),
+		granio.NewMenuItem("Sponsor", func() {
 			u, _ := url.Parse("https://fyne.io/sponsor")
-			_ = fyne.CurrentApp().OpenURL(u)
+			_ = granio.CurrentApp().OpenURL(u)
 		}),
 	)
 }
 
-func (d *defyne) makeMenu() *fyne.MainMenu {
-	menu := fyne.NewMainMenu(
-		fyne.NewMenu("File",
-			fyne.NewMenuItem("Open Project...", d.showProjectSelect),
-			fyne.NewMenuItemSeparator(),
-			fyne.NewMenuItem("New File...", d.menuActionNew),
-			fyne.NewMenuItemSeparator(),
-			fyne.NewMenuItem("Save", d.menuActionSave),
-			fyne.NewMenuItemSeparator(),
-			fyne.NewMenuItem("Run", d.menuActionRun),
-			fyne.NewMenuItem("Run Project", d.menuActionRunProject),
+func (d *defyne) makeMenu() *granio.MainMenu {
+	menu := granio.NewMainMenu(
+		granio.NewMenu("File",
+			granio.NewMenuItem("Open Project...", d.showProjectSelect),
+			granio.NewMenuItemSeparator(),
+			granio.NewMenuItem("New File...", d.menuActionNew),
+			granio.NewMenuItemSeparator(),
+			granio.NewMenuItem("Save", d.menuActionSave),
+			granio.NewMenuItemSeparator(),
+			granio.NewMenuItem("Run", d.menuActionRun),
+			granio.NewMenuItem("Run Project", d.menuActionRunProject),
 		))
 	if runtime.GOOS != "darwin" {
 		menu.Items = append(menu.Items,
-			fyne.NewMenu("Window",
-				fyne.NewMenuItem("Full Screen", d.menuActionFullScreenToggle),
+			granio.NewMenu("Window",
+				granio.NewMenuItem("Full Screen", d.menuActionFullScreenToggle),
 			))
 	}
 	menu.Items = append(menu.Items,

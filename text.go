@@ -4,10 +4,10 @@ import (
 	"io"
 	"runtime"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/driver/desktop"
-	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/driver/desktop"
+	"github.com/Uzer007-admin/granio/v2/storage"
+	"github.com/Uzer007-admin/granio/v2/widget"
 )
 
 // Declare conformity with editor interface
@@ -19,10 +19,10 @@ type codeEntry struct {
 	editor *textEditor
 }
 
-func (e *codeEntry) TypedShortcut(shortcut fyne.Shortcut) {
+func (e *codeEntry) TypedShortcut(shortcut granio.Shortcut) {
 	if sh, ok := shortcut.(*desktop.CustomShortcut); ok {
-		ctrlSuper := (runtime.GOOS == "darwin" && sh.Modifier == fyne.KeyModifierSuper) ||
-			(runtime.GOOS != "darwin" && sh.Modifier == fyne.KeyModifierControl)
+		ctrlSuper := (runtime.GOOS == "darwin" && sh.Modifier == granio.KeyModifierSuper) ||
+			(runtime.GOOS != "darwin" && sh.Modifier == granio.KeyModifierControl)
 		if sh.KeyName == "S" && ctrlSuper {
 			e.editor.save()
 		}
@@ -30,12 +30,12 @@ func (e *codeEntry) TypedShortcut(shortcut fyne.Shortcut) {
 }
 
 type textEditor struct {
-	uri    fyne.URI
+	uri    granio.URI
 	entry  *codeEntry
 	edited bool
 }
 
-func newTextEditor(u fyne.URI, _ fyne.Window) editor {
+func newTextEditor(u granio.URI, _ granio.Window) editor {
 	text := &codeEntry{}
 	text.MultiLine = true
 	text.TextStyle.Monospace = true
@@ -58,7 +58,7 @@ func (t *textEditor) changed() bool {
 	return t.edited
 }
 
-func (t *textEditor) content() fyne.CanvasObject {
+func (t *textEditor) content() granio.CanvasObject {
 	return t.entry
 }
 

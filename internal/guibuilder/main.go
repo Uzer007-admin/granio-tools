@@ -6,45 +6,45 @@ import (
 	"path/filepath"
 	"strings"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/data/validation"
-	"fyne.io/fyne/v2/dialog"
-	"fyne.io/fyne/v2/layout"
-	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/theme"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/data/validation"
+	"github.com/Uzer007-admin/granio/v2/dialog"
+	"github.com/Uzer007-admin/granio/v2/layout"
+	"github.com/Uzer007-admin/granio/v2/storage"
+	"github.com/Uzer007-admin/granio/v2/theme"
+	"github.com/Uzer007-admin/granio/v2/widget"
 
-	"github.com/fyne-io/refyne"
+	"github.com/Uzer007-admin/granio-ui"
 )
 
 var (
 	editForm    *widget.Form
 	widName     *widget.Entry
-	paletteList *fyne.Container
+	paletteList *granio.Container
 )
 
 // Builder is a simple type handle for a GUI builder instance.
 type Builder struct {
 	refyne.Context
 
-	root, current fyne.CanvasObject
-	uri           fyne.URI
-	win           fyne.Window
-	meta          map[fyne.CanvasObject]map[string]string
-	th            fyne.Theme
+	root, current granio.CanvasObject
+	uri           granio.URI
+	win           granio.Window
+	meta          map[granio.CanvasObject]map[string]string
+	th            granio.Theme
 }
 
 // NewBuilder returns an instance of the GUI builder for the specified URI.
 // The Window parameter allows presenting dialogs etc.
-func NewBuilder(u fyne.URI, win fyne.Window) *Builder {
+func NewBuilder(u granio.URI, win granio.Window) *Builder {
 	r, err := storage.Reader(u)
 	if err != nil {
 		dialog.ShowError(err, win)
 	}
 
-	builder := &Builder{uri: u, win: win, meta: make(map[fyne.CanvasObject]map[string]string)}
-	var obj fyne.CanvasObject
+	builder := &Builder{uri: u, win: win, meta: make(map[granio.CanvasObject]map[string]string)}
+	var obj granio.CanvasObject
 	if r == nil {
 		obj = previewUI()
 	} else {
@@ -63,16 +63,16 @@ func NewBuilder(u fyne.URI, win fyne.Window) *Builder {
 	return builder
 }
 
-func (b *Builder) Metadata() map[fyne.CanvasObject]map[string]string {
+func (b *Builder) Metadata() map[granio.CanvasObject]map[string]string {
 	return b.meta
 }
 
-func (b *Builder) Theme() fyne.Theme {
+func (b *Builder) Theme() granio.Theme {
 	return b.th
 }
 
 // MakeUI builds the UI for the current GUI builder.
-func (b *Builder) MakeUI() fyne.CanvasObject {
+func (b *Builder) MakeUI() granio.CanvasObject {
 	return b.buildUI(b.root)
 }
 
@@ -83,18 +83,18 @@ func (b *Builder) Run() {
 	storage.CreateListable(dir)
 	goURI, err := storage.Child(dir, "main.go")
 	if err != nil {
-		fyne.LogError("Failed to write temporary code", err)
+		granio.LogError("Failed to write temporary code", err)
 		return
 	}
 
 	w, err := storage.Writer(goURI)
 	if err != nil {
-		fyne.LogError("Failed get storage writer", err)
+		granio.LogError("Failed get storage writer", err)
 		return
 	}
 	err = refyne.ExportGoPreview(b.root, b, w)
 	if err != nil {
-		fyne.LogError("Failed to export go preview", err)
+		granio.LogError("Failed to export go preview", err)
 		return
 	}
 
@@ -149,13 +149,13 @@ func (b *Builder) Save() error {
 	return err
 }
 
-func (b *Builder) save(w fyne.URIWriteCloser) error {
+func (b *Builder) save(w granio.URIWriteCloser) error {
 	err := refyne.EncodeObject(b.root, b, w)
 	_ = w.Close()
 	return err
 }
 
-func (b *Builder) buildLibrary() fyne.CanvasObject {
+func (b *Builder) buildLibrary() granio.CanvasObject {
 	var selected string
 	tempNames := []string{}
 	widgetNames := []string{}
@@ -177,9 +177,9 @@ func (b *Builder) buildLibrary() fyne.CanvasObject {
 	}
 	list := widget.NewList(func() int {
 		return len(tempNames)
-	}, func() fyne.CanvasObject {
+	}, func() granio.CanvasObject {
 		return widget.NewLabel("")
-	}, func(i widget.ListItemID, obj fyne.CanvasObject) {
+	}, func(i widget.ListItemID, obj granio.CanvasObject) {
 		if i >= len(tempNames) {
 			return
 		}
@@ -210,7 +210,7 @@ func (b *Builder) buildLibrary() fyne.CanvasObject {
 	}
 
 	return container.NewBorder(searchBox, widget.NewButtonWithIcon("Insert", theme.ContentAddIcon(), func() {
-		if c, ok := b.current.(*fyne.Container); ok {
+		if c, ok := b.current.(*granio.Container); ok {
 			if selected != "" {
 				c.Objects = append(c.Objects, refyne.CreateNew(selected, b))
 				c.Refresh()
@@ -224,7 +224,7 @@ func (b *Builder) buildLibrary() fyne.CanvasObject {
 	}), nil, nil, list)
 }
 
-func (b *Builder) buildUI(content fyne.CanvasObject) fyne.CanvasObject {
+func (b *Builder) buildUI(content granio.CanvasObject) granio.CanvasObject {
 	wrap := container.NewStack(b.root, newOverlay(b))
 
 	widName = widget.NewEntry()
@@ -242,7 +242,7 @@ func (b *Builder) buildUI(content fyne.CanvasObject) fyne.CanvasObject {
 	return split
 }
 
-func (b *Builder) choose(o fyne.CanvasObject) {
+func (b *Builder) choose(o granio.CanvasObject) {
 	b.current = o
 
 	name := b.meta[o]["name"]
@@ -282,13 +282,13 @@ func (b *Builder) choose(o fyne.CanvasObject) {
 		parent.Refresh()
 		b.choose(parent)
 	})
-	paletteList.Objects = []fyne.CanvasObject{editForm, remove}
+	paletteList.Objects = []granio.CanvasObject{editForm, remove}
 	paletteList.Refresh()
 }
 
-func findParent(o fyne.CanvasObject, parent fyne.CanvasObject) *fyne.Container {
+func findParent(o granio.CanvasObject, parent granio.CanvasObject) *granio.Container {
 	switch w := parent.(type) {
-	case *fyne.Container:
+	case *granio.Container:
 		for _, child := range w.Objects {
 			if child == o {
 				return w
@@ -303,7 +303,7 @@ func findParent(o fyne.CanvasObject, parent fyne.CanvasObject) *fyne.Container {
 	return nil
 }
 
-func previewUI() fyne.CanvasObject {
+func previewUI() granio.CanvasObject {
 	return container.New(layout.NewVBoxLayout(),
 		widget.NewLabel("label"),
 		widget.NewButtonWithIcon("Button", theme.HomeIcon(), func() {}))

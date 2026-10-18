@@ -1,13 +1,13 @@
 package main
 
-import "fyne.io/fyne/v2"
+import "github.com/Uzer007-admin/granio/v2"
 
-var editorsByFilename = map[string]func(fyne.URI, fyne.Window) editor{
+var editorsByFilename = map[string]func(granio.URI, granio.Window) editor{
 	".gui.json": newGuiEditor,
 	"go.mod":    newTextEditor,
 }
 
-var editorsByMime = map[string]func(fyne.URI, fyne.Window) editor{
+var editorsByMime = map[string]func(granio.URI, granio.Window) editor{
 	"application/xml-tdd": newTextEditor, // Go mime on older systems?
 	"image/jpeg":          newImageEditor,
 	"image/png":           newImageEditor,
@@ -20,7 +20,7 @@ var editorsByMime = map[string]func(fyne.URI, fyne.Window) editor{
 type editor interface {
 	changed() bool
 	close()
-	content() fyne.CanvasObject
+	content() granio.CanvasObject
 	run()
 	save()
 }

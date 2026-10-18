@@ -1,23 +1,23 @@
 package main
 
 import (
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/dialog"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/dialog"
 
-	"github.com/fyne-io/defyne/internal/guibuilder"
+	"github.com/Uzer007-admin/granio-studio/internal/guibuilder"
 )
 
 // Declare conformity with editor interface
 var _ editor = (*guiEditor)(nil)
 
 type guiEditor struct {
-	uri     fyne.URI
+	uri     granio.URI
 	builder *guibuilder.Builder
 	edited  bool
-	win     fyne.Window
+	win     granio.Window
 }
 
-func newGuiEditor(u fyne.URI, win fyne.Window) editor {
+func newGuiEditor(u granio.URI, win granio.Window) editor {
 	builder := guibuilder.NewBuilder(u, win)
 	return &guiEditor{uri: u, builder: builder, win: win}
 }
@@ -26,7 +26,7 @@ func (g *guiEditor) changed() bool {
 	return g.edited
 }
 
-func (g *guiEditor) content() fyne.CanvasObject {
+func (g *guiEditor) content() granio.CanvasObject {
 	return g.builder.MakeUI()
 }
 

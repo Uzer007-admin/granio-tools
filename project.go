@@ -5,22 +5,22 @@ import (
 	"os"
 	"os/exec"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/dialog"
-	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/canvas"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/dialog"
+	"github.com/Uzer007-admin/granio/v2/storage"
+	"github.com/Uzer007-admin/granio/v2/widget"
 )
 
-func (d *defyne) showNewProjectDialog(w fyne.Window) {
+func (d *defyne) showNewProjectDialog(w granio.Window) {
 	parent := widget.NewButton("Choose directory", nil)
 	dir := defaultDir()
 	if dir != nil {
 		parent.SetText(dir.Name())
 	}
 	parent.OnTapped = func() {
-		dialog.ShowFolderOpen(func(u fyne.ListableURI, err error) {
+		dialog.ShowFolderOpen(func(u granio.ListableURI, err error) {
 			if err != nil {
 				dialog.ShowError(err, d.win)
 				return
@@ -51,13 +51,13 @@ func (d *defyne) showNewProjectDialog(w fyne.Window) {
 			d.win.Show()
 			w.Close()
 
-			addRecent(dir, fyne.CurrentApp().Preferences())
+			addRecent(dir, granio.CurrentApp().Preferences())
 		}
 	}, w)
 }
 
-func (d *defyne) showOpenProjectDialog(w fyne.Window) {
-	dialog.ShowFolderOpen(func(u fyne.ListableURI, err error) {
+func (d *defyne) showOpenProjectDialog(w granio.Window) {
+	dialog.ShowFolderOpen(func(u granio.ListableURI, err error) {
 		if err != nil {
 			dialog.ShowError(err, d.win)
 			return
@@ -70,17 +70,17 @@ func (d *defyne) showOpenProjectDialog(w fyne.Window) {
 		d.win.Show()
 		w.Close()
 
-		addRecent(u, fyne.CurrentApp().Preferences())
+		addRecent(u, granio.CurrentApp().Preferences())
 	}, w)
 }
 
 func (d *defyne) showProjectSelect() {
-	a := fyne.CurrentApp()
+	a := granio.CurrentApp()
 	w := a.NewWindow("Defyne : Open Project")
 	if d.projectRoot == nil { // this is our welcome screen
-		w.SetMainMenu(fyne.NewMainMenu(
-			fyne.NewMenu("File",
-				fyne.NewMenuItem("Open Project...", w.Show),
+		w.SetMainMenu(granio.NewMainMenu(
+			granio.NewMenu("File",
+				granio.NewMenuItem("Open Project...", w.Show),
 			),
 			d.makeHelpMenu(w),
 		))
@@ -88,12 +88,12 @@ func (d *defyne) showProjectSelect() {
 
 	img := canvas.NewImageFromResource(resourceIconPng)
 	img.FillMode = canvas.ImageFillContain
-	img.SetMinSize(fyne.NewSize(192, 192))
+	img.SetMinSize(granio.NewSize(192, 192))
 	openProject := widget.NewButton("Open Project", func() {
 		d.showOpenProjectDialog(w)
 	})
 	openProject.Importance = widget.HighImportance
-	open := container.NewBorder(widget.NewLabelWithStyle("Defyne", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
+	open := container.NewBorder(widget.NewLabelWithStyle("Defyne", granio.TextAlignCenter, granio.TextStyle{Bold: true}),
 		openProject, nil, nil, container.NewCenter(img))
 
 	create := widget.NewButton("New Project", func() {
@@ -101,19 +101,19 @@ func (d *defyne) showProjectSelect() {
 	})
 	w.SetContent(container.NewGridWithColumns(2,
 		container.NewBorder(widget.NewLabel("Recent projects"), create, nil, nil,
-			makeRecentList(a.Preferences(), func(u fyne.URI) {
+			makeRecentList(a.Preferences(), func(u granio.URI) {
 				d.setProject(u)
 				d.win.Show()
 				w.Close()
 
-				addRecent(u, fyne.CurrentApp().Preferences())
+				addRecent(u, granio.CurrentApp().Preferences())
 			})),
 		open))
-	w.Resize(fyne.NewSize(620, 440))
+	w.Resize(granio.NewSize(620, 440))
 	w.Show()
 }
 
-func createProject(parent fyne.URI, name string) (fyne.URI, error) {
+func createProject(parent granio.URI, name string) (granio.URI, error) {
 	dir, err := storage.Child(parent, name)
 	if err != nil {
 		return nil, err
@@ -126,7 +126,7 @@ func createProject(parent fyne.URI, name string) (fyne.URI, error) {
 
 	err = writeFile(dir, "main.go", `package main
 
-import "fyne.io/fyne/v2/app"
+import "github.com/Uzer007-admin/granio/v2/app"
 
 func main() {
 	a := app.New()
@@ -139,7 +139,7 @@ func main() {
 }
 `)
 	if err != nil {
-		fyne.LogError("Failed to write main.go", err) // we can just return the partial project
+		granio.LogError("Failed to write main.go", err) // we can just return the partial project
 		return dir, nil
 	}
 	err = writeFile(dir, "main.gui.go", `// auto-generated
@@ -148,31 +148,31 @@ func main() {
 package main
 
 import (
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/widget"
 )
 
 type gui struct {
-	win fyne.Window
+	win granio.Window
 }
 
 func newGUI() *gui {
 	return &gui{}
 }
 
-func (g *gui) makeUI() fyne.CanvasObject {
+func (g *gui) makeUI() granio.CanvasObject {
 	return container.NewVBox(
 		widget.NewLabel("Hello `+name+`!"))
 
 }
 `)
 	if err != nil {
-		fyne.LogError("Failed to write main.go", err) // we can just return the partial project
+		granio.LogError("Failed to write main.go", err) // we can just return the partial project
 		return dir, nil
 	}
 	err = writeFile(dir, "main.gui.json", `{
-  "Type": "*fyne.Container",
+  "Type": "*granio.Container",
   "Layout": "VBox",
   "Name": "",
   "Objects": [
@@ -199,16 +199,16 @@ func (g *gui) makeUI() fyne.CanvasObject {
 }
 `)
 	if err != nil {
-		fyne.LogError("Failed to write main.gui.json", err) // we can just return the partial project
+		granio.LogError("Failed to write main.gui.json", err) // we can just return the partial project
 		return dir, nil
 	}
 
 	err = writeFile(dir, "go.mod", `module `+name+`
 
-require fyne.io/fyne/v2 v2.5.3
+require github.com/Uzer007-admin/granio/v2 v2.5.3
 `)
 	if err != nil {
-		fyne.LogError("Failed to write go.mod", err) // we can just return the partial project
+		granio.LogError("Failed to write go.mod", err) // we can just return the partial project
 		return dir, nil
 	}
 
@@ -216,27 +216,27 @@ require fyne.io/fyne/v2 v2.5.3
 	cmd.Dir = dir.Path()
 	err = cmd.Start() // run in background - may take a little while but should not block file editing
 	if err != nil {   // just print, can just continue to open project
-		fyne.LogError("Could not run go mod tidy", err)
+		granio.LogError("Could not run go mod tidy", err)
 	}
 	return dir, nil
 }
 
-func defaultDir() fyne.ListableURI {
+func defaultDir() granio.ListableURI {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		fyne.LogError("Failed to get user home directory", err)
+		granio.LogError("Failed to get user home directory", err)
 		return nil
 	}
 	defaultDir := storage.NewFileURI(homeDir)
 	newDir, err := storage.ListerForURI(defaultDir)
 	if err != nil {
-		fyne.LogError("Failed to list home directory", err)
+		granio.LogError("Failed to list home directory", err)
 		return nil
 	}
 	return newDir
 }
 
-func writeFile(dir fyne.URI, name, content string) error {
+func writeFile(dir granio.URI, name, content string) error {
 	modURI, _ := storage.Child(dir, name)
 
 	w, err := storage.Writer(modURI)
@@ -245,7 +245,7 @@ func writeFile(dir fyne.URI, name, content string) error {
 	}
 	_, err = io.WriteString(w, content)
 	if err != nil {
-		fyne.LogError("Failed to write go.mod", err)
+		granio.LogError("Failed to write go.mod", err)
 		return err
 	}
 	return w.Close()

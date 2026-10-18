@@ -7,13 +7,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/storage"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/app"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/storage"
 )
 
-func (d *defyne) setProject(u fyne.URI) {
+func (d *defyne) setProject(u granio.URI) {
 	d.projectRoot = u
 
 	content := container.NewVSplit(d.makeEditorPanel(), d.makeTerminalPanel())
@@ -30,7 +30,7 @@ func main() {
 	a := app.NewWithID("io.fyne.defyne")
 	a.SetIcon(resourceIconPng)
 	w := a.NewWindow("Defyne")
-	w.Resize(fyne.NewSize(1024, 768))
+	w.Resize(granio.NewSize(1024, 768))
 
 	ide := &defyne{win: w}
 	if len(os.Args) > 1 {

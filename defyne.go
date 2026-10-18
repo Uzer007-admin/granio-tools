@@ -3,28 +3,28 @@ package main
 import (
 	"strings"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/dialog"
-	"fyne.io/fyne/v2/theme"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/dialog"
+	"github.com/Uzer007-admin/granio/v2/theme"
 
-	xWidget "fyne.io/x/fyne/widget"
+	xWidget "github.com/Uzer007-admin/granio-x/widget"
 )
 
 type fileTab struct {
 	editor
-	uri fyne.URI
+	uri granio.URI
 }
 
 type defyne struct {
-	win         fyne.Window
-	projectRoot fyne.URI
+	win         granio.Window
+	projectRoot granio.URI
 	fileTabs    *container.DocTabs
 	fileTree    *xWidget.FileTree
 	openEditors map[*container.TabItem]*fileTab
 }
 
-func (d *defyne) openEditor(u fyne.URI) {
+func (d *defyne) openEditor(u granio.URI) {
 	for tab, item := range d.openEditors {
 		if item.uri.String() == u.String() {
 			d.fileTabs.Select(tab)
