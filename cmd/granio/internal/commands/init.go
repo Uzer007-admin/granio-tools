@@ -6,9 +6,11 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime/debug"
 	"strings"
 
 	"github.com/urfave/cli/v2"
+	"golang.org/x/mod/modfile"
 
 	"github.com/Uzer007-admin/granio-tools/cmd/granio/internal/metadata"
 	"github.com/Uzer007-admin/granio-tools/cmd/granio/internal/templates"
@@ -18,11 +20,11 @@ import (
 func Init() *cli.Command {
 	return &cli.Command{
 		Name:      "init",
-		Usage:     "Initializes a new Fyne project",
+		Usage:     "Создаёт новое приложение Granio",
 		ArgsUsage: "[module-path]",
 		Action:    initAction,
-		Description: "Initializes a new Fyne project in the current directory, including\n" +
-			"a go.mod, main.go, and FyneApp.toml file (unless existing).",
+		Description: "Создаёт приложение Granio в текущем каталоге: go.mod, main.go и FyneApp.toml.\n" +
+			"Существующие файлы сохраняются.",
 		Flags: []cli.Flag{
 			stringFlags["app-id"](nil),
 			stringFlags["name"](nil),
@@ -134,8 +136,20 @@ func initAction(ctx *cli.Context) error {
 		if verbose {
 			cmd.Stdout, cmd.Stderr = os.Stdout, os.Stderr
 		}
+
+		if err := cmd.Run(); err != nil {
+			return err
+		}
+		cmd = exec.Command("go", "mod", "edit", "-go=1.27.1")
+		if verbose {
+			cmd.Stdout, cmd.Stderr = os.Stdout, os.Stderr
+		}
 		return cmd.Run()
 	}); err != nil {
+		return err
+	}
+
+	if err := ensureGranioDependency(".", verbose); err != nil {
 		return err
 	}
 
@@ -167,7 +181,43 @@ func initAction(ctx *cli.Context) error {
 		return fmt.Errorf("failed to run command: %v", err)
 	}
 
-	fmt.Println("Your new app is ready. Run it directly with: go run .")
+	fmt.Println("Приложение готово. Запуск: go run .")
 
 	return nil
+}
+
+// granioVersionForInit avoids selecting an inherited upstream release through @latest.
+func granioVersionForInit() string {
+	if info, ok := debug.ReadBuildInfo(); ok {
+		for _, dep := range info.Deps {
+			if dep.Path == fyneModule && strings.HasPrefix(dep.Version, "v2.") {
+				return dep.Version
+			}
+		}
+	}
+	return "v2.8.2-0.20261018000600-86cc66cfefa1"
+}
+
+// ensureGranioDependency preserves a project-selected version and pins the CLI's
+// core version when the application does not yet declare one.
+func ensureGranioDependency(directory string, verbose bool) error {
+	data, err := os.ReadFile(filepath.Join(directory, "go.mod"))
+	if err != nil {
+		return err
+	}
+	mod, err := modfile.Parse("go.mod", data, nil)
+	if err != nil {
+		return err
+	}
+	for _, dep := range mod.Require {
+		if dep.Mod.Path == fyneModule {
+			return nil
+		}
+	}
+	cmd := exec.Command("go", "mod", "edit", "-require="+fyneModule+"@"+granioVersionForInit())
+	cmd.Dir = directory
+	if verbose {
+		cmd.Stdout, cmd.Stderr = os.Stdout, os.Stderr
+	}
+	return cmd.Run()
 }
