@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
 	// iosOS it the ios OS name
 	iosOS = "ios"
 	// iosImage is the fyne-cross image for the iOS OS
-	iosImage = "fyneio/fyne-cross:1.3-base"
+	iosImage = "ghcr.io/uzer007-admin/granio-cross:base"
 )
 
 // IOS build and package the fyne app for the ios OS

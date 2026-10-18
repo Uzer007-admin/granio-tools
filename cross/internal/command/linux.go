@@ -4,18 +4,18 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
 	// linuxOS it the linux OS name
 	linuxOS = "linux"
 	// linuxImage is the fyne-cross image for the Linux OS
-	linuxImageAmd64 = "fyneio/fyne-cross-images:linux"
-	linuxImage386   = "fyneio/fyne-cross-images:linux"
-	linuxImageArm64 = "fyneio/fyne-cross-images:linux"
-	linuxImageArm   = "fyneio/fyne-cross-images:linux"
+	linuxImageAmd64 = "ghcr.io/uzer007-admin/granio-cross:linux"
+	linuxImage386   = "ghcr.io/uzer007-admin/granio-cross:linux"
+	linuxImageArm64 = "ghcr.io/uzer007-admin/granio-cross:linux"
+	linuxImageArm   = "ghcr.io/uzer007-admin/granio-cross:linux"
 )
 
 var (

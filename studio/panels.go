@@ -12,7 +12,7 @@ import (
 
 	xWidget "github.com/Uzer007-admin/granio-x/widget"
 
-	"github.com/Uzer007-admin/granio-terminal"
+	"github.com/Uzer007-admin/granio-x/terminal"
 )
 
 func (d *defyne) makeEditorPanel() granio.CanvasObject {

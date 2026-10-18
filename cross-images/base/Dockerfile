@@ -104,7 +104,7 @@ RUN set -eux; \
 
 # Install the fyne-cross-s3 download and upload tool
 RUN set -eux; \
-    go install -ldflags="-w -s" -v "github.com/Uzer007-admin/granio-cross/internal/cmd/fyne-cross-s3@v1.6.4-0.20261018001919-678e6b740c1b"; \
+    go install -ldflags="-w -s" -v "github.com/Uzer007-admin/granio-tools/cross/internal/cmd/fyne-cross-s3@v1.6.4-0.20261018001919-678e6b740c1b"; \
     mv /go/bin/fyne-cross-s3 /usr/local/bin/fyne-cross-s3;
 
 # Install the fyne CLI tool

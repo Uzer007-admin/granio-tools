@@ -1,11 +1,11 @@
 github.com/Uzer007-admin/gl v0.0.0-20261017234122-3756695c6558 h1:l6OwrYlYclIdsdvxJ2HXyu7mXgttcvJYXiPN3uMDTm0=
 github.com/Uzer007-admin/gl v0.0.0-20261017234122-3756695c6558/go.mod h1:WWhaBjlh8fh0HIyvmFyDaPMDs9wNkVg8UJ1BnjAZqso=
-github.com/Uzer007-admin/granio-gl-js v0.2.1-0.20261017234923-9e3b07127717 h1:0zvAI/qlj3oFSc41PJCReZcVoNhYAquLXHQXi19G8h0=
-github.com/Uzer007-admin/granio-gl-js v0.2.1-0.20261017234923-9e3b07127717/go.mod h1:0KSBSXMv4+UBGnlRtNBDgEP5eG2B5zoyRqSuy+K5VOI=
-github.com/Uzer007-admin/granio-oksvg v0.2.1-0.20261017234852-ddb3049db67c h1:8Or5ewhN3HvFaH1LbmwpaXBbeNsrqWKUn8MEelnyhr0=
-github.com/Uzer007-admin/granio-oksvg v0.2.1-0.20261017234852-ddb3049db67c/go.mod h1:b3+B3NTwuoevVgA8aXJPC+JgPH9pvCR7nn8iqNHOGVw=
-github.com/Uzer007-admin/granio/v2 v2.8.2-0.20261018003528-057d685c0778 h1:Q3SvFfoAqv4DAWI+NMqmjU7s1slxwIacZ5U94Ta+URg=
-github.com/Uzer007-admin/granio/v2 v2.8.2-0.20261018003528-057d685c0778/go.mod h1:ryLXLfIrMHLho4LwHQd3bUQHNE6f/mpU5uoKtBlODuA=
+github.com/Uzer007-admin/granio/deps/gl-js v0.0.0-20261018062049-d56bde3dff7f h1:LZE+xDNFDc4TMIpePmgBoqg7zHcJICiArk+lQ6Hof50=
+github.com/Uzer007-admin/granio/deps/gl-js v0.0.0-20261018062049-d56bde3dff7f/go.mod h1:sDbs0KHv9OIj2Gn/x91M/Obx35YMkEbuLvaJwjG8NYU=
+github.com/Uzer007-admin/granio/deps/oksvg v0.0.0-20261018062049-d56bde3dff7f h1:pL60HnHAfCyCiLhtrHRkS7oCgUA6kj6IR1Lhn86hCMg=
+github.com/Uzer007-admin/granio/deps/oksvg v0.0.0-20261018062049-d56bde3dff7f/go.mod h1:aMrrSQXTRrjs65o9y0uqCusT03DpqZco3FVN9cR+nWg=
+github.com/Uzer007-admin/granio/v2 v2.8.2-0.20261018062539-44c3df9361e7 h1:zxsG1zkdU60sZ6Krr0x98ia6e7VYGe9hgcqnYWEtUHM=
+github.com/Uzer007-admin/granio/v2 v2.8.2-0.20261018062539-44c3df9361e7/go.mod h1:OXLiNF5F/NZChMlY4QJ3p3w7Co6UJEhW9bZPEQBjUIU=
 github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef h1:Ch6Q+AZUxDBCVqdkI8FSpFyZDtCVBc2VmejdNrm5rRQ=
 github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef/go.mod h1:nXTWP6+gD5+LUJ8krVhhoeHjvHTutPxMYl5SvkcnJNE=
 github.com/stretchr/testify v1.12.1 h1:EuwCh5fleGS7H32xRwO3wRGT7DxrDhLAT6FF8MpWDWE=

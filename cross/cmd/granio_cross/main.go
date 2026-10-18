@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/Uzer007-admin/granio-cross/internal/command"
-	"github.com/Uzer007-admin/granio-cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/command"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
 )
 
 func main() {

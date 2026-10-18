@@ -4,17 +4,17 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
 	// freebsdOS it the freebsd OS name
 	freebsdOS = "freebsd"
 	// freebsdImageAmd64 is the fyne-cross image for the FreeBSD OS amd64 arch
-	freebsdImageAmd64 = "fyneio/fyne-cross-images:freebsd-amd64"
+	freebsdImageAmd64 = "ghcr.io/uzer007-admin/granio-cross:freebsd-amd64"
 	// freebsdImageArm64 is the fyne-cross image for the FreeBSD OS arm64 arch
-	freebsdImageArm64 = "fyneio/fyne-cross-images:freebsd-arm64"
+	freebsdImageArm64 = "ghcr.io/uzer007-admin/granio-cross:freebsd-arm64"
 )
 
 var (

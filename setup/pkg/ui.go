@@ -1,5 +1,5 @@
 // Package pkg provides the public API elements of our setup tool.
-package pkg // import "github.com/Uzer007-admin/granio-setup/pkg"
+package pkg // import "github.com/Uzer007-admin/granio-tools/setup/pkg"
 
 import (
 	"net/url"

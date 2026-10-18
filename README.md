@@ -1,61 +1,37 @@
-# granio-tools
+# Инструменты Granio
 
-Компонент независимого проекта **Granio — Гранио**.
+Сборка, упаковка и подготовка окружения приложений Granio.
 
-**Исходный репозиторий:** [tools](https://github.com/fyne-io/tools).
-**Цель форка:** Сборка, упаковка и обслуживание приложений Granio.
+**Основной исходник:** https://github.com/fyne-io/tools.
+**Цель форка:** сопровождать инструменты, кросс-сборку, образы, мобильный мост
+и среду разработки в одном репозитории. Истории, лицензии и авторские сведения
+сохранены; дополнительные источники перечислены в [SOURCES.json](SOURCES.json).
 
-История изменений, лицензии и сведения об исходных авторах сохранены.
-Go-модули переведены на собственные пути `github.com/Uzer007-admin/…`;
-минимальная версия Go — **1.27.1**. Ядро и общие API подключаются из
-[`granio/v2`](https://github.com/Uzer007-admin/granio).
+| Компонент | Путь | Исходник |
+| --- | --- | --- |
+| Упаковщик | `cmd/granio` | [tools](https://github.com/fyne-io/tools) |
+| Проверка окружения | `cmd/granio_setup`, библиотека `setup/pkg` | [setup](https://github.com/fyne-io/setup) |
+| Кросс-сборка | `cross/cmd/granio_cross` | [fyne-cross](https://github.com/fyne-io/fyne-cross) |
+| Рецепты образов | `cross-images` | [fyne-cross-images](https://github.com/fyne-io/fyne-cross-images) |
+| Мобильный мост | `mobile-bridge` | [gomobile-bridge](https://github.com/fyne-io/gomobile-bridge) |
+| Среда разработки | `studio` | [defyne](https://github.com/fyne-io/defyne) |
 
-Состояние переноса и результаты проверок приведены в
-[реестре экосистемы](https://github.com/Uzer007-admin/granio/blob/dev/granio/docs/ECOSYSTEM.md).
-Наличие форка само по себе не означает проверку всех платформ и сценариев.
+Go 1.27.1+. Кросс-сборка и мобильный мост сохраняют отдельные Go-модули:
+зависимости Kubernetes и AWS не включаются в модуль обычного упаковщика.
 
----
+```sh
+go install github.com/Uzer007-admin/granio-tools/cmd/granio@{{TOOLS_VERSION}}
+go install github.com/Uzer007-admin/granio-tools/cmd/granio_setup@{{TOOLS_VERSION}}
+go install github.com/Uzer007-admin/granio-tools/cross/cmd/granio_cross@{{CROSS_VERSION}}
+go install github.com/Uzer007-admin/granio-tools/studio@{{TOOLS_VERSION}}
+```
 
-## Документация исходного проекта
+Для локальной проверки каждого модуля задайте `GOWORK=off` и выполните
+`go test -race -tags migrated_fynedo,ci ./...` в корне модуля.
+Мобильный мост используется как `replace` для `golang.org/x/mobile`;
+его новый адрес — `github.com/Uzer007-admin/granio-tools/mobile-bridge`.
 
-Команды установки и ссылки в сохранённом тексте ниже относятся к исходнику.
-Для Granio используются новые пути модулей, перечисленные выше.
-
-# Fyne CLI tools
-
-Toolchain and helpful commands for building and managing Fyne apps.
-
-## Installation
-
-Using the standard go tools you can install Fyne's command line tool using:
-
-    go install fyne.io/tools/cmd/fyne@latest
-
-## Synopsis
-
-To list all available commands enter `fyne help`:
-
-    NAME:
-       fyne - A command line helper for various Fyne tools.
-    
-    USAGE:
-       fyne [global options] command [command options]
-    
-    DESCRIPTION:
-       The fyne command provides tooling for fyne applications and to assist in their development.
-    
-    COMMANDS:
-       init             Initializes a new Fyne project
-       env, e           Prints the Fyne module and environment information
-       build, b         Builds an application
-       package, p       Packages an application for distribution
-       release, r       Prepares an application for public distribution
-       install, get, i  Packages and installs an application
-       serve, s         Packages an application using WebAssembly and exposes it via a web server
-       translate, t     Scans for new translation strings
-       version, v       Shows version information for fyne
-       bundle           Embeds static content into your go application
-       help, h          Shows a list of commands or help for one command
-    
-    GLOBAL OPTIONS:
-       --help, -h  show help
+Рецепты образов находятся в `cross-images`; сборка и публикация образов,
+доступность платформенных SDK и приёмка мобильных приложений проверяются отдельно.
+Флаги упаковщика, используемые существующими сценариями, сохраняются.
+[Материалы исходного проекта](UPSTREAM.md).

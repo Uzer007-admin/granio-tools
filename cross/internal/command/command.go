@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Uzer007-admin/granio-cross/internal/icon"
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/icon"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 	"golang.org/x/mod/semver"
 	"golang.org/x/sys/execabs"
 )

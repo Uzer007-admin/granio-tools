@@ -9,8 +9,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 
 	"golang.org/x/sys/execabs"
 )

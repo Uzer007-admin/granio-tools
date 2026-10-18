@@ -7,12 +7,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
-	darwinSDKExtractImage  = "fyneio/fyne-cross-images:darwin-sdk-extractor"
+	darwinSDKExtractImage  = "ghcr.io/uzer007-admin/granio-cross:darwin-sdk-extractor"
 	darwinSDKExtractOutDir = "SDKs"
 	darwinSDKExtractScript = "darwin-sdk-extractor.sh"
 )

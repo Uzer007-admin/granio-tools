@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/Uzer007-admin/granio/v2/app"
 
-	"github.com/Uzer007-admin/granio-setup/pkg"
+	"github.com/Uzer007-admin/granio-tools/setup/pkg"
 )
 
 func main() {

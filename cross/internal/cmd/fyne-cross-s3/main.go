@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/Uzer007-admin/granio-cross/internal/cloud"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/cloud"
 	"github.com/urfave/cli/v2"
 )
 

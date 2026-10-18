@@ -15,7 +15,7 @@ import (
 	"github.com/Uzer007-admin/granio/v2/theme"
 	"github.com/Uzer007-admin/granio/v2/widget"
 
-	"github.com/Uzer007-admin/granio-ui"
+	"github.com/Uzer007-admin/granio-x/ui"
 )
 
 var (

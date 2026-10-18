@@ -1,29 +1,14 @@
-name: Run tests on all maintained fyne branch
-
+name: Проверка с Granio
 on:
   workflow_call:
     inputs:
       tags:
-        description: "Tags to pass when running tests"
         required: false
-        default: ""
+        default: migrated_fynedo,ci
         type: string
-
 jobs:
-  qa-develop:
-    uses: fyne-io/tools/.github/workflows/fyne-qa.yml@main
+  qa:
+    uses: Uzer007-admin/granio-tools/.github/workflows/fyne-qa.yml@dev/granio
     with:
-      branch: develop
-      tags: ${{ inputs.tags }}
-
-  qa-latest:
-    uses: fyne-io/tools/.github/workflows/fyne-qa.yml@main
-    with:
-      branch: master
-      tags: ${{ inputs.tags }}
-
-  qa-v2_6:
-    uses: fyne-io/tools/.github/workflows/fyne-qa.yml@main
-    with:
-      branch: "release/v2.6.x"
+      branch: dev/granio
       tags: ${{ inputs.tags }}

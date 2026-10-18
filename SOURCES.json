@@ -1,0 +1,70 @@
+{
+  "base_source": "https://github.com/fyne-io/tools",
+  "sources": [
+    {
+      "source": "https://github.com/fyne-io/setup",
+      "prepared_commit": "683d1f108126c6ea51bc7052cf5208e4ce55ea6f",
+      "path": "setup",
+      "history_merged": true,
+      "previous_repository": "https://github.com/Uzer007-admin/granio-setup",
+      "previous_repository_deleted": false,
+      "module": "github.com/Uzer007-admin/granio-tools/setup",
+      "separate_module": false,
+      "license_files": [
+        "LICENSE",
+        "AUTHORS"
+      ]
+    },
+    {
+      "source": "https://github.com/fyne-io/fyne-cross",
+      "prepared_commit": "31df9a655fbdd6ef62f61dc7f39f00e57537ff5e",
+      "path": "cross",
+      "history_merged": true,
+      "previous_repository": "https://github.com/Uzer007-admin/granio-cross",
+      "previous_repository_deleted": false,
+      "module": "github.com/Uzer007-admin/granio-tools/cross",
+      "separate_module": true,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "source": "https://github.com/fyne-io/fyne-cross-images",
+      "prepared_commit": "ae4beedb31fcb026052e4426eb9c4ecdeab67a2b",
+      "path": "cross-images",
+      "history_merged": true,
+      "previous_repository": "https://github.com/Uzer007-admin/granio-cross-images",
+      "previous_repository_deleted": false,
+      "module": null,
+      "separate_module": false,
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "source": "https://github.com/fyne-io/gomobile-bridge",
+      "prepared_commit": "ffcc419abe1dcdf551a6313e511a2d8885cc4c84",
+      "path": "mobile-bridge",
+      "history_merged": true,
+      "previous_repository": "https://github.com/Uzer007-admin/granio-mobile-bridge",
+      "previous_repository_deleted": false,
+      "module": "github.com/Uzer007-admin/granio-tools/mobile-bridge",
+      "separate_module": true,
+      "license_files": []
+    },
+    {
+      "source": "https://github.com/fyne-io/defyne",
+      "prepared_commit": "abd126eaf242ab9f88d20cfd2f975f435d10ca1a",
+      "path": "studio",
+      "history_merged": true,
+      "previous_repository": null,
+      "previous_repository_deleted": false,
+      "module": "github.com/Uzer007-admin/granio-tools/studio",
+      "separate_module": false,
+      "license_files": [
+        "LICENSE",
+        "AUTHORS"
+      ]
+    }
+  ]
+}

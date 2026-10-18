@@ -5,15 +5,15 @@ import (
 	"os"
 	"path"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
 	// androidOS is the android OS name
 	androidOS = "android"
 	// androidImage is the fyne-cross image for the Android OS
-	androidImage = "fyneio/fyne-cross-images:android"
+	androidImage = "ghcr.io/uzer007-admin/granio-cross:android"
 )
 
 var (

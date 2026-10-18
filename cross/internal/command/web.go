@@ -3,15 +3,15 @@ package command
 import (
 	"fmt"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
 	// webOS it the ios OS name
 	webOS = "web"
 	// webImage is the fyne-cross image for the web
-	webImage = "fyneio/fyne-cross-images:web"
+	webImage = "ghcr.io/uzer007-admin/granio-cross:web"
 )
 
 // web build and package the fyne app for the web

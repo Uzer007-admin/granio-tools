@@ -1,4 +1,4 @@
-module github.com/Uzer007-admin/granio-cross
+module github.com/Uzer007-admin/granio-tools/cross
 
 go 1.27.1
 

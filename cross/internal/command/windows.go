@@ -5,15 +5,15 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
 	// windowsOS it the windows OS name
 	windowsOS = "windows"
 	// windowsImage is the fyne-cross image for the Windows OS
-	windowsImage = "fyneio/fyne-cross-images:windows"
+	windowsImage = "ghcr.io/uzer007-admin/granio-cross:windows"
 )
 
 var (

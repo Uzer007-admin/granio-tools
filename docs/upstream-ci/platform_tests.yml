@@ -1,0 +1,29 @@
+name: Platform Tests
+on: [push, pull_request]
+permissions:
+  contents: read
+
+jobs:
+  platform_tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ["", "stable"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+          go-version-file: "go.mod"
+
+      - name: Test (macOS, external linkmode)
+        if: matrix.os == 'macos-latest'
+        run: go test -race -tags ci -ldflags="-linkmode=external" ./...
+      - name: Tests
+        if: matrix.os != 'macos-latest'
+        run: go test -race -tags ci ./...

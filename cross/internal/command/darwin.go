@@ -6,8 +6,8 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/Uzer007-admin/granio-cross/internal/log"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/log"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 const (
@@ -19,7 +19,7 @@ var (
 	// darwinArchSupported defines the supported target architectures on darwin
 	darwinArchSupported = []Architecture{ArchAmd64, ArchArm64}
 	// darwinImage is the fyne-cross image for the Darwin OS
-	darwinImage = "fyneio/fyne-cross-images:darwin"
+	darwinImage = "ghcr.io/uzer007-admin/granio-cross:darwin"
 )
 
 // Darwin build and package the fyne app for the darwin OS

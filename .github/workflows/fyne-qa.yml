@@ -1,56 +1,40 @@
-name: Run tests using fyne version from specified branch
-
+name: Проверка с выбранной веткой Granio
 on:
   workflow_call:
     inputs:
       branch:
-        description: 'Branch to run tests on'
-        required: true
-        default: 'master'
+        required: false
+        default: dev/granio
         type: string
       tags:
-        description: 'Tags to pass when running tests'
         required: false
-        default: ''
+        default: migrated_fynedo,ci
         type: string
-
+permissions:
+  contents: read
+env:
+  GOWORK: "off"
 jobs:
   qa:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
-          go-version: 'stable'
-
-      - name: Install fyne dependencies
-        if: ${{ runner.os == 'Linux' }}
-        run: |
-          sudo apt-get update && sudo apt-get install gcc libgl1-mesa-dev libegl1-mesa-dev libgles2-mesa-dev libx11-dev xorg-dev
-
-      - name: Install fyne
+          repository: Uzer007-admin/granio
+          ref: ${{ inputs.branch }}
+          path: .granio-source
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.27.1'
+      - name: Подключить исходники Granio
+        run: go mod edit -replace github.com/Uzer007-admin/granio/v2=./.granio-source
+      - name: Согласовать зависимости
+        run: go mod tidy
+      - name: Тесты
         env:
-          GOPROXY: direct
-        run: go install github.com/Uzer007-admin/granio/v2/cmd/granio@${{ inputs.branch }}
-
-      - name: Switch to requested branch
-        env:
-          GOPROXY: direct
-        run: |
-          go get github.com/Uzer007-admin/granio/v2@${{ inputs.branch }}
-          go mod tidy
-
-      - name: Run test with tags
-        if: ${{ inputs.tags != '' }}
-        run: go test -tags ${{ inputs.tags }} ./...
-
-      - name: Run test without tags
-        if: ${{ inputs.tags == '' }}
-        run: go test ./...
-
-      - name: Build the application with fyne
-        run: fyne package      
+          GRANIO_TEST_TAGS: ${{ inputs.tags }}
+        run: go test -race -tags "$GRANIO_TEST_TAGS" ./...

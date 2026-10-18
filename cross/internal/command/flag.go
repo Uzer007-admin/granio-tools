@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Uzer007-admin/granio-cross/internal/icon"
-	"github.com/Uzer007-admin/granio-cross/internal/metadata"
-	"github.com/Uzer007-admin/granio-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/icon"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/metadata"
+	"github.com/Uzer007-admin/granio-tools/cross/internal/volume"
 )
 
 var flagSet = flag.NewFlagSet("fyne-cross", flag.ExitOnError)

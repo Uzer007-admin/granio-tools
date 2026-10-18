@@ -20,5 +20,5 @@ InReleaseOnly = "Value3"
 Test = "Value1"
 
 [Source]
-Repo = "https://github.com/fyne-io/fyne"
+Repo = "https://github.com/Uzer007-admin/granio-tools"
 Dir = "internal/metadata/testdata"

@@ -4,7 +4,7 @@ import (
 	"github.com/Uzer007-admin/granio/v2"
 	"github.com/Uzer007-admin/granio/v2/dialog"
 
-	"github.com/Uzer007-admin/granio-studio/internal/guibuilder"
+	"github.com/Uzer007-admin/granio-tools/studio/internal/guibuilder"
 )
 
 // Declare conformity with editor interface

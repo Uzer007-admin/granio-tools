@@ -13,7 +13,7 @@ import (
 	"github.com/Uzer007-admin/granio/v2/theme"
 	"github.com/Uzer007-admin/granio/v2/widget"
 
-	setup "github.com/Uzer007-admin/granio-setup/pkg"
+	setup "github.com/Uzer007-admin/granio-tools/setup/pkg"
 )
 
 func (d *defyne) menuActionNew() {
