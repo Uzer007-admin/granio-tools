@@ -1,0 +1,59 @@
+package main
+
+import (
+	"os"
+
+	"github.com/Uzer007-admin/granio-cross/internal/command"
+	"github.com/Uzer007-admin/granio-cross/internal/log"
+)
+
+func main() {
+
+	// Define the command to use
+	commands := []command.Command{
+		&command.DarwinSDKExtract{},
+		command.NewDarwinCommand(),
+		command.NewLinuxCommand(),
+		command.NewWindowsCommand(),
+		command.NewAndroidCommand(),
+		command.NewIOSCommand(),
+		command.NewFreeBSD(),
+		command.NewWebCommand(),
+		&command.Version{},
+	}
+
+	// display fyne-cross usage if no command is specified
+	if len(os.Args) == 1 {
+		command.Usage(commands)
+		os.Exit(1)
+	}
+
+	// check for valid command
+	var cmd command.Command
+	for _, v := range commands {
+		if os.Args[1] == v.Name() {
+			cmd = v
+			break
+		}
+	}
+
+	// If no valid command is specified display the usage
+	if cmd == nil {
+		command.Usage(commands)
+		os.Exit(1)
+	}
+
+	// Parse the arguments for the command
+	// It will display the command usage if -help is specified
+	// and will exit in case of error
+	err := cmd.Parse(os.Args[2:])
+	if err != nil {
+		log.Fatalf("[✗] %s", err)
+	}
+
+	// Finally run the command
+	err = cmd.Run()
+	if err != nil {
+		log.Fatalf("[✗] %s", err)
+	}
+}
