@@ -21,4 +21,4 @@ Test = "Value1"
 
 [Source]
 Repo = "https://github.com/Uzer007-admin/granio-tools"
-Dir = "internal/metadata/testdata"
+Dir = "cmd/granio/internal/metadata/testdata"

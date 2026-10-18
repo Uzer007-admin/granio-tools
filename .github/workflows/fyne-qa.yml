@@ -35,6 +35,7 @@ jobs:
       - name: Согласовать зависимости
         run: go mod tidy
       - name: Тесты
+        shell: bash
         env:
           GRANIO_TEST_TAGS: ${{ inputs.tags }}
         run: go test -race -tags "$GRANIO_TEST_TAGS" ./...

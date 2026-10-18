@@ -4,7 +4,7 @@ go 1.27.1
 
 require (
 	github.com/BurntSushi/toml v1.6.0
-	github.com/Uzer007-admin/granio-x v0.0.0-20261018064453-22a6db2b4c9a
+	github.com/Uzer007-admin/granio-x v0.0.0-20261018072629-9836f4ca6d00
 	github.com/Uzer007-admin/granio/deps/image v0.0.0-20261018062049-d56bde3dff7f
 	github.com/Uzer007-admin/granio/v2 v2.8.2-0.20261018062539-44c3df9361e7
 	github.com/fogleman/gg v1.3.0

@@ -27,8 +27,8 @@ func TestLoadAppMetadata(t *testing.T) {
 	assert.NotContains(t, data.Development, "InReleaseOnly")
 
 	assert.NotNil(t, data.Source)
-	assert.Equal(t, data.Source.Repo, "https://github.com/fyne-io/fyne")
-	assert.Equal(t, data.Source.Dir, "internal/metadata/testdata")
+	assert.Equal(t, "https://github.com/Uzer007-admin/granio-tools", data.Source.Repo)
+	assert.Equal(t, "cmd/granio/internal/metadata/testdata", data.Source.Dir)
 
 	assert.NotNil(t, data.Splash)
 	assert.Equal(t, "#015952", data.Splash.Background)
