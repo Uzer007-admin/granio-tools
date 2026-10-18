@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fyne-io/fyne-cross/internal/icon"
-	"github.com/fyne-io/fyne-cross/internal/log"
-	"github.com/fyne-io/fyne-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-cross/internal/icon"
+	"github.com/Uzer007-admin/granio-cross/internal/log"
+	"github.com/Uzer007-admin/granio-cross/internal/volume"
 	"golang.org/x/mod/semver"
 	"golang.org/x/sys/execabs"
 )
@@ -157,26 +157,26 @@ func printUsage(template string, data interface{}) {
 
 // checkFyneBinHost checks if the fyne cli tool is installed on the host
 func checkFyneBinHost(ctx Context) (string, error) {
-	fyne, err := execabs.LookPath("fyne")
+	granio, err := execabs.LookPath("fyne")
 	if err != nil {
-		return "", fmt.Errorf("missed requirement: fyne. To install: `go install fyne.io/fyne/v2/cmd/fyne@latest` and add $GOPATH/bin to $PATH")
+		return "", fmt.Errorf("missed requirement: fyne. To install: `go install github.com/Uzer007-admin/granio/v2/cmd/granio@latest` and add $GOPATH/bin to $PATH")
 	}
 
-	return fyne, nil
+	return granio, nil
 }
 
-func fyneCommandVersion(fyne string, ctx Context, image containerImage) string {
+func fyneCommandVersion(granio string, ctx Context, image containerImage) string {
 	var out string
 	if image.OS() == "darwin" {
 		buf := &bytes.Buffer{}
-		cmd := exec.Command(fyne, "version")
+		cmd := exec.Command(granio, "version")
 		cmd.Stdout = buf
 		if err := cmd.Run(); err != nil {
 			return ""
 		}
 		out = buf.String()
 	} else {
-		out, _ = image.Command(ctx.Volume, options{}, []string{fyne, "version"})
+		out, _ = image.Command(ctx.Volume, options{}, []string{granio, "version"})
 	}
 	for _, line := range strings.Split(out, "\n") {
 		_, ver, found := strings.Cut(line, "fyne cli version: ")
@@ -187,8 +187,8 @@ func fyneCommandVersion(fyne string, ctx Context, image containerImage) string {
 	return ""
 }
 
-func fyneCommandVersionCompare(fyne, ver string, ctx Context, image containerImage) int {
-	return semver.Compare(fyneCommandVersion(fyne, ctx, image), ver)
+func fyneCommandVersionCompare(granio, ver string, ctx Context, image containerImage) int {
+	return semver.Compare(fyneCommandVersion(granio, ctx, image), ver)
 }
 
 func fyneCommand(binary, command, icon string, ctx Context, image containerImage) []string {
@@ -234,13 +234,13 @@ func fyneCommand(binary, command, icon string, ctx Context, image containerImage
 // fynePackageHost package the application using the fyne cli tool from the host
 // Note: at the moment this is used only for the ios builds
 func fynePackageHost(ctx Context, image containerImage) (string, error) {
-	fyne, err := checkFyneBinHost(ctx)
+	granio, err := checkFyneBinHost(ctx)
 	if err != nil {
 		return "", err
 	}
 
 	icon := volume.JoinPathHost(ctx.TmpDirHost(), image.ID(), icon.Default)
-	args := fyneCommand(fyne, "package", icon, ctx, image)
+	args := fyneCommand(granio, "package", icon, ctx, image)
 
 	// ios packaging require certificate and profile for running on devices
 	if image.OS() == iosOS {
@@ -292,13 +292,13 @@ func fynePackageHost(ctx Context, image containerImage) (string, error) {
 // fyneReleaseHost package and release the application using the fyne cli tool from the host
 // Note: at the moment this is used only for the ios and windows builds
 func fyneReleaseHost(ctx Context, image containerImage) (string, error) {
-	fyne, err := checkFyneBinHost(ctx)
+	granio, err := checkFyneBinHost(ctx)
 	if err != nil {
 		return "", err
 	}
 
 	icon := volume.JoinPathHost(ctx.TmpDirHost(), image.ID(), icon.Default)
-	args := fyneCommand(fyne, "release", icon, ctx, image)
+	args := fyneCommand(granio, "release", icon, ctx, image)
 
 	workDir := ctx.WorkDirHost()
 

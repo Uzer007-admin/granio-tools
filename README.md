@@ -1,3 +1,26 @@
+# granio-cross
+
+Компонент независимого проекта **Granio — Гранио**.
+
+**Исходный репозиторий:** [fyne-cross](https://github.com/fyne-io/fyne-cross).
+**Цель форка:** Кросс-компиляция приложений Granio.
+
+История изменений, лицензии и сведения об исходных авторах сохранены.
+Go-модули переведены на собственные пути `github.com/Uzer007-admin/…`;
+минимальная версия Go — **1.27.1**. Ядро и общие API подключаются из
+[`granio/v2`](https://github.com/Uzer007-admin/granio).
+
+Состояние переноса и результаты проверок приведены в
+[реестре экосистемы](https://github.com/Uzer007-admin/granio/blob/dev/granio/docs/ECOSYSTEM.md).
+Наличие форка само по себе не означает проверку всех платформ и сценариев.
+
+---
+
+## Документация исходного проекта
+
+Команды установки и ссылки в сохранённом тексте ниже относятся к исходнику.
+Для Granio используются новые пути модулей, перечисленные выше.
+
 # Fyne Cross
 
 [![CI](https://github.com/fyne-io/fyne-cross/workflows/CI/badge.svg)](https://github.com/fyne-io/fyne-cross/actions?query=workflow%3ACI) [![Go Report Card](https://goreportcard.com/badge/github.com/fyne-io/fyne-cross)](https://goreportcard.com/report/github.com/fyne-io/fyne-cross) [![GoDoc](https://godoc.org/github.com/fyne-io/fyne-cross?status.svg)](http://godoc.org/github.com/fyne-io/fyne-cross) [![version](https://img.shields.io/github/v/tag/fyne-io/fyne-cross?label=version)]()

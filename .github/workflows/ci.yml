@@ -139,7 +139,7 @@ jobs:
 
       - name: Install Fyne
         run: |
-          go install fyne.io/tools/cmd/fyne@latest
+          go install github.com/Uzer007-admin/granio-tools/cmd/granio@latest
 
       - name: Install Docker
         if: ${{ runner.os == 'macos' }}
@@ -215,7 +215,7 @@ jobs:
 
       - name: Install Fyne
         run: |
-          go install fyne.io/tools/cmd/fyne@latest
+          go install github.com/Uzer007-admin/granio-tools/cmd/granio@latest
 
       - name: Install Docker
         if: ${{ runner.os == 'macos' }}

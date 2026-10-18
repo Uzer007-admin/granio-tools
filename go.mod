@@ -1,6 +1,6 @@
-module github.com/fyne-io/fyne-cross
+module github.com/Uzer007-admin/granio-cross
 
-go 1.19
+go 1.27.1
 
 require (
 	github.com/BurntSushi/toml v1.6.0

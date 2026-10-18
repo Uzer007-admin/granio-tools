@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/fyne-io/fyne-cross/internal/log"
-	"github.com/fyne-io/fyne-cross/internal/volume"
+	"github.com/Uzer007-admin/granio-cross/internal/log"
+	"github.com/Uzer007-admin/granio-cross/internal/volume"
 )
 
 const (
