@@ -1,0 +1,179 @@
+package commands
+
+import (
+	"bytes"
+	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+
+	"github.com/Uzer007-admin/granio-tools/cmd/granio/internal/goos"
+	"github.com/Uzer007-admin/granio-tools/cmd/granio/internal/metadata"
+	"github.com/Uzer007-admin/granio-tools/cmd/granio/internal/templates"
+)
+
+type unixData struct {
+	Name           string
+	AppID          string
+	Exec           string
+	Icon           string
+	Local          string
+	GenericName    string
+	Categories     string
+	Comment        string
+	Keywords       string
+	ExecParams     string
+	MimeTypes      string
+	StartupWMClass string
+
+	SourceRepo, SourceDir string
+}
+
+func (p *Packager) packageUNIX() error {
+	var prefixDir string
+	local := "local/"
+	dirName := filepath.Base(p.exe)
+
+	outDir := p.dir
+	if !p.install {
+		outDir = pkgUtil.EnsureSubDir(pkgUtil.EnsureSubDir(p.dir, "tmp-pkg"), dirName)
+	}
+
+	outDirUsr := pkgUtil.EnsureSubDir(outDir, "usr")
+	if _, err := os.Stat(filepath.Join("/", "usr", "local")); os.IsNotExist(err) {
+		prefixDir = outDirUsr
+		local = ""
+	} else {
+		prefixDir = pkgUtil.EnsureSubDir(outDirUsr, "local")
+	}
+
+	shareDir := pkgUtil.EnsureSubDir(prefixDir, "share")
+
+	binDir := pkgUtil.EnsureSubDir(prefixDir, "bin")
+	binName := filepath.Join(binDir, filepath.Base(p.exe))
+	err := pkgUtil.CopyExeFile(p.exe, binName)
+	if err != nil {
+		return fmt.Errorf("failed to copy application binary file: %w", err)
+	}
+
+	appIDOrName := p.AppID
+	if appIDOrName == "" {
+		appIDOrName = p.Name
+	}
+
+	iconDir := pkgUtil.EnsureSubDir(shareDir, "pixmaps")
+	iconName := appIDOrName + filepath.Ext(p.icon)
+	iconPath := filepath.Join(iconDir, iconName)
+	err = pkgUtil.CopyFile(p.icon, iconPath)
+	if err != nil {
+		return fmt.Errorf("failed to copy icon: %w", err)
+	}
+
+	mimes := ""
+	openWith := ""
+	if p.CanOpen != nil && p.CanOpen.MimeTypes != "" {
+		mimes = p.CanOpen.MimeTypes
+		openWith = " %F"
+	}
+
+	appsDir := pkgUtil.EnsureSubDir(shareDir, "applications")
+	desktop := filepath.Join(appsDir, appIDOrName+".desktop")
+	if p.verbose {
+		// when packaging, the desktop file is staged in a directory that the
+		// tarball is created from and which is removed afterwards
+		note := ""
+		if !p.install {
+			note = " (removed after packaging)"
+		}
+		fmt.Println("Creating desktop file", relDir(desktop)+note)
+	}
+
+	deskFile, err := os.Create(desktop)
+	if err != nil {
+		return fmt.Errorf("failed to create desktop file: %w", err)
+	}
+
+	defer deskFile.Close()
+
+	linuxBSD := metadata.LinuxAndBSD{}
+	if p.linuxAndBSDMetadata != nil {
+		linuxBSD = *p.linuxAndBSDMetadata
+	}
+	tplData := unixData{
+		Name:           p.Name,
+		AppID:          p.AppID,
+		Exec:           filepath.Base(p.exe) + openWith,
+		Icon:           appIDOrName,
+		Local:          local,
+		GenericName:    linuxBSD.GenericName,
+		Keywords:       formatDesktopFileList(linuxBSD.Keywords),
+		Comment:        linuxBSD.Comment,
+		Categories:     formatDesktopFileList(linuxBSD.Categories),
+		ExecParams:     linuxBSD.ExecParams,
+		MimeTypes:      mimes,
+		StartupWMClass: p.Name,
+	}
+
+	if p.sourceMetadata != nil {
+		tplData.SourceRepo = p.sourceMetadata.Repo
+		tplData.SourceDir = p.sourceMetadata.Dir
+	}
+
+	err = templates.DesktopFileUNIX.Execute(deskFile, tplData)
+	if err != nil {
+		return fmt.Errorf("failed to write desktop entry string: %w", err)
+	}
+
+	if p.install {
+		return nil
+	}
+
+	parent := filepath.Dir(outDir)
+	defer os.RemoveAll(parent)
+
+	makefile, _ := os.Create(filepath.Join(outDir, "Makefile"))
+	tplData.Icon += ".png"
+	err = templates.MakefileUNIX.Execute(makefile, tplData)
+	if err != nil {
+		return fmt.Errorf("failed to write Makefile string: %w", err)
+	}
+
+	tarball := filepath.Join(p.dir, p.Name+".tar.xz")
+	tarCmdArgs := []string{"-Jcf", tarball}
+	if p.os == goos.OpenBSD {
+		tarball = filepath.Join(p.dir, p.Name+".tar.gz")
+		tarCmdArgs = []string{"-zcf", tarball}
+	}
+	if p.verbose {
+		fmt.Println("Packaging", relPath(tarball))
+	}
+
+	// Compatibility mode for old fyne-cross versions using images with new CLI
+	// versions resulting in a tar archive prefix of "./appname/" instead of "./".
+	// This is to allow producing a final set of compatible images before
+	// switching to a new namespace and merging fyne-cross into fyne-tools as
+	// one of the supported commands.
+	if fyneCrossCompat {
+		tarCmdArgs = append(tarCmdArgs, "-C", outDir, "Makefile", "usr") //revive:disable-line:add-constant
+	} else {
+		tarCmdArgs = append(tarCmdArgs, "-C", parent, dirName)
+	}
+
+	var buf bytes.Buffer
+	tarCmd := exec.Command("tar", tarCmdArgs...)
+	tarCmd.Stderr = &buf
+	if err = tarCmd.Run(); err != nil {
+		return fmt.Errorf("failed to create archive with tar: %s - %w", buf.String(), err)
+	}
+
+	return nil
+}
+
+func formatDesktopFileList(items []string) string {
+	if len(items) == 0 {
+		return ""
+	}
+
+	return strings.Join(items, ";") + ";"
+}

@@ -1,1 +1,1 @@
-package tools // import "fyne.io/tools"
+package tools // import "github.com/Uzer007-admin/granio-tools"

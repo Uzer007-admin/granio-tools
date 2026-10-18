@@ -1,12 +1,12 @@
-module fyne.io/tools
+module github.com/Uzer007-admin/granio-tools
 
-go 1.22.0
+go 1.27.1
 
 require (
-	fyne.io/fyne/v2 v2.8.1
 	github.com/BurntSushi/toml v1.6.0
+	github.com/Uzer007-admin/granio-image v0.1.2-0.20261017234830-b1607a79c1eb
+	github.com/Uzer007-admin/granio/v2 v2.8.2-0.20261018000600-86cc66cfefa1
 	github.com/fogleman/gg v1.3.0
-	github.com/fyne-io/image v0.1.1
 	github.com/go-ole/go-ole v1.3.0
 	github.com/jackmordaunt/icns/v2 v2.2.7
 	github.com/josephspurrier/goversioninfo v1.7.0
@@ -14,33 +14,30 @@ require (
 	github.com/mcuadros/go-version v0.0.0-20190830083331-035f6764e8d2
 	github.com/natefinch/atomic v1.0.1
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
-	github.com/stretchr/testify v1.11.1
+	github.com/stretchr/testify v1.12.1
 	github.com/urfave/cli/v2 v2.27.7
-	golang.org/x/mod v0.23.0
-	golang.org/x/tools v0.30.0
+	golang.org/x/mod v0.42.0
+	golang.org/x/tools v0.52.0
 	golang.org/x/tools/go/vcs v0.1.0-deprecated
 )
 
 require (
+	github.com/Uzer007-admin/gl v0.0.0-20261017234122-3756695c6558 // indirect
+	github.com/Uzer007-admin/granio-gl-js v0.2.1-0.20261017234923-9e3b07127717 // indirect
+	github.com/Uzer007-admin/granio-oksvg v0.2.1-0.20261017234852-ddb3049db67c // indirect
 	github.com/akavel/rsrc v0.10.2 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.7 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/fyne-io/gl-js v0.2.1-0.20260315212741-029c47fd27e8 // indirect
-	github.com/fyne-io/oksvg v0.2.0 // indirect
-	github.com/go-gl/gl v0.0.0-20260331235117-4566fea9a276 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25 // indirect
-	github.com/kr/text v0.2.0 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
-	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
-	golang.org/x/image v0.24.0 // indirect
-	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/sync v0.11.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	github.com/xrash/smetrics v0.0.0-20250705151800-55b8f293f342 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
+	golang.org/x/image v0.47.0 // indirect
+	golang.org/x/net v0.61.0 // indirect
+	golang.org/x/sync v0.24.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 )
 
 retract (

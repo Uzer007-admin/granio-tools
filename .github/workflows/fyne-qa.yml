@@ -35,13 +35,13 @@ jobs:
       - name: Install fyne
         env:
           GOPROXY: direct
-        run: go install fyne.io/fyne/v2/cmd/fyne@${{ inputs.branch }}
+        run: go install github.com/Uzer007-admin/granio/v2/cmd/granio@${{ inputs.branch }}
 
       - name: Switch to requested branch
         env:
           GOPROXY: direct
         run: |
-          go get fyne.io/fyne/v2@${{ inputs.branch }}
+          go get github.com/Uzer007-admin/granio/v2@${{ inputs.branch }}
           go mod tidy
 
       - name: Run test with tags
