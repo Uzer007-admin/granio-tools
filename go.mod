@@ -3,7 +3,7 @@ module github.com/Uzer007-admin/granio-setup
 go 1.27.1
 
 require (
-	github.com/Uzer007-admin/granio-tools v1.7.4-0.20261018001739-ff21b8cfdc07
+	github.com/Uzer007-admin/granio-tools v1.7.4-0.20261018002347-2a016ccc3b21
 	github.com/Uzer007-admin/granio/v2 v2.8.2-0.20261018000600-86cc66cfefa1
 	github.com/stretchr/testify v1.12.1
 	golang.org/x/mod v0.42.0
