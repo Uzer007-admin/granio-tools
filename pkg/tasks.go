@@ -10,7 +10,7 @@ import (
 
 	"golang.org/x/mod/semver"
 
-	"fyne.io/tools"
+	"github.com/Uzer007-admin/granio-tools"
 )
 
 type task struct {

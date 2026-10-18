@@ -1,21 +1,21 @@
 // Package pkg provides the public API elements of our setup tool.
-package pkg // import "fyne.io/setup/pkg"
+package pkg // import "github.com/Uzer007-admin/granio-setup/pkg"
 
 import (
 	"net/url"
 	"time"
 
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/dialog"
-	"fyne.io/fyne/v2/layout"
-	"fyne.io/fyne/v2/theme"
-	"fyne.io/fyne/v2/widget"
+	"github.com/Uzer007-admin/granio/v2"
+	"github.com/Uzer007-admin/granio/v2/container"
+	"github.com/Uzer007-admin/granio/v2/dialog"
+	"github.com/Uzer007-admin/granio/v2/layout"
+	"github.com/Uzer007-admin/granio/v2/theme"
+	"github.com/Uzer007-admin/granio/v2/widget"
 )
 
 // ShowSummaryDialog shows a new dialog in the specified window and runs the environment checks.
 // After displaying the process will start and the UI will update as it progresses.
-func ShowSummaryDialog(w fyne.Window) {
+func ShowSummaryDialog(w granio.Window) {
 	form := makeEnvcheckForm()
 	content := container.NewVBox(form, makeLinks())
 	d := dialog.NewCustom("Checking Development Environment", "Cancel", content, w)
@@ -27,7 +27,7 @@ func ShowSummaryDialog(w fyne.Window) {
 
 // ShowSummaryWindow shows a new window for the specified app and runs the environment checks.
 // After displaying the process will start and the UI will update as it progresses.
-func ShowSummaryWindow(a fyne.App) {
+func ShowSummaryWindow(a granio.App) {
 	w := a.NewWindow("Environment Check")
 	form := makeEnvcheckForm()
 	content := container.NewVBox(form, makeLinks())
@@ -111,12 +111,12 @@ func (l *checkLine) SetOnValidationChanged(cb func(error)) {
 	l.errCB = cb
 }
 
-func (l *checkLine) CreateRenderer() fyne.WidgetRenderer {
+func (l *checkLine) CreateRenderer() granio.WidgetRenderer {
 	return widget.NewSimpleRenderer(container.NewBorder(nil, nil, nil, l.icon,
 		l.label))
 }
 
-func makeLinks() *fyne.Container {
+func makeLinks() *granio.Container {
 	fix, _ := url.Parse("https://developer.fyne.io/faq/troubleshoot")
 	help, _ := url.Parse("https://fyne.io/support/")
 

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fyne.io/fyne/v2/app"
+	"github.com/Uzer007-admin/granio/v2/app"
 
-	"fyne.io/setup/pkg"
+	"github.com/Uzer007-admin/granio-setup/pkg"
 )
 
 func main() {
